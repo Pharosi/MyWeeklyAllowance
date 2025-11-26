@@ -72,8 +72,8 @@ MyWeeklyAllowance/
 
 1. Cloner le projet
 
-git clone https://github.com/<votre-utilisateur>/myWeeklyAllowance.git
-cd myWeeklyAllowance
+git clone https://github.com/Pharosi/MyWeeklyAllowance.git
+cd MyWeeklyAllowance
 
 2. Installer les dépendances
 
