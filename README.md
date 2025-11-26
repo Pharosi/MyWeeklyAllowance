@@ -1,114 +1,196 @@
-# 📘 README – MyWeeklyAllowance
+📘 README — MyWeeklyAllowance
 
-🎯 Présentation du projet
+🧭 1. Présentation du projet
 
-MyWeeklyAllowance est un mini-module PHP permettant de gérer l’argent de poche d’un adolescent.
-Le projet applique strictement la méthode TDD (Test Driven Development) : les tests unitaires ont été écrits avant le code, puis le code minimum nécessaire a été développé pour faire passer les tests.
+MyWeeklyAllowance est un module de gestion d’argent de poche.
 
-L’objectif principal est d’obtenir un module simple, fiable et entièrement testé, avec une couverture supérieure à 85 % via PHPUnit.
+Il permet à un parent de gérer un porte-monnaie virtuel pour un adolescent :
+	•	création du compte,
+	•	dépôts,
+	•	retraits,
+	•	allocation hebdomadaire automatique.
 
-⸻
-
-⚙️ Fonctionnalités
-
-Le module gère un compte d’argent de poche avec les opérations suivantes :
-	•	création d’un compte adolescent
-	•	dépôt d’argent
-	•	enregistrement de dépenses
-	•	consultation du solde
-	•	définition d’une allocation hebdomadaire
-	•	application automatique de l’allocation à la semaine
-
-Chaque méthode est testée individuellement selon la logique TDD.
+Le projet a été réalisé entièrement en TDD (Test Driven Development), avec un objectif minimal de 85 % de couverture, largement dépassé (100 %).
 
 ⸻
 
-🧪 Méthodologie : TDD
+🧪 2. Méthodologie TDD
 
-Le développement a suivi les trois étapes classiques :
+Le développement suit les trois phases du TDD :
+	1.	RED — Écriture des tests avant tout code
+	2.	GREEN — Implémentation minimale pour faire passer les tests
+	3.	REFACTOR — Nettoyage du code avec tests au vert
 
-1️⃣ RED
-
-Rédaction des tests unitaires avant toute implémentation.
-Les tests échouent volontairement au début.
-
-2️⃣ GREEN
-
-Implémentation du code minimal jusqu’à ce que tous les tests passent.
-
-3️⃣ REFACTOR
-
-Nettoyage du code :
-	•	clarification des noms
-	•	simplification des méthodes
-	•	meilleure organisation des fichiers
-	•	conformité à la norme SR4
-
-Ce cycle a été répété plusieurs fois pour stabiliser la logique métier.
+Les commits du dépôt reflètent clairement ces trois étapes.
 
 ⸻
 
-🗂️ Structure du projet
+📂 3. Structure du projet
 
 MyWeeklyAllowance/
+│
 ├── src/
-│   └── Allowance/
-│       └── Account.php
+│   └── Argent/
+│       └── PorteMonnaie.php
+│
 ├── tests/
-│   └── Allowance/
-│       └── AccountTest.php
+│   └── Argent/
+│       └── PorteMonnaieTest.php
+│
+├── vendor/
+├── coverage/   (généré automatiquement)
 ├── composer.json
-├── phpunit.xml
-└── README.md
+└── phpunit.xml
 
-	•	src/ contient le code métier
-	•	tests/ contient les tests unitaires PHPUnit
-	•	phpunit.xml configure la suite de tests
-	•	composer.json gère l’autoload PSR-4
 
 ⸻
 
-🚀 Installation
+🛠 4. Fonctionnalités
 
-1. Cloner le projet
+La classe PorteMonnaie gère :
 
-git clone https://github.com/Pharosi/MyWeeklyAllowance.git
-cd MyWeeklyAllowance
+🔹 Gestion du solde
+	•	solde initial = 0
+	•	dépôt (deposer)
+	•	retrait (retirer) avec vérifications :
+	•	montant > 0
+	•	solde suffisant
 
-2. Installer les dépendances
-
-composer install
-
-3. Lancer les tests
-
-vendor/bin/phpunit
+🔹 Allocation hebdomadaire
+	•	définition (definirAllocationHebdo)
+	•	application (appliquerAllocationHebdo)
+	•	application multiple cumulative
 
 ⸻
 
-📊 Couverture de tests
+🧪 5. Tests unitaires
 
-Pour générer un rapport HTML :
+Tous les tests se trouvent dans :
+
+tests/Argent/PorteMonnaieTest.php
+
+Scénarios couverts :
+	•	solde initial
+	•	dépôt et retrait
+	•	retrait impossible si solde insuffisant
+	•	montant négatif (dépôt/retrait/allocation)
+	•	allocation hebdomadaire (simple et multiple)
+
+⸻
+
+📊 6. Couverture de code
+
+Générée via :
 
 vendor/bin/phpunit --coverage-html coverage
 
-Un dossier coverage/ sera créé avec le rapport de couverture consultable dans un navigateur.
+Résultat final :
+	•	100 % lignes couvertes
+	•	100 % méthodes couvertes
+	•	100 % classe couverte
+
+Rapport HTML disponible dans :
+
+coverage/index.html
+
 
 ⸻
 
-🧠 Choix techniques
-	•	PHP 8+ avec typage strict
-	•	PSR-4 pour l’autoload
-	•	Tests unitaires avec PHPUnit
-	•	Méthodes courtes et explicites
-	•	Logique métier centralisée dans la classe Account
+📝 7. Rapport détaillé du développement
 
-Aucun framework externe n’a été utilisé afin d’isoler parfaitement la logique métier et faciliter les tests.
+1. Contexte du projet
+
+Le but était d’implémenter un porte-monnaie virtuel pour adolescents en appliquant strictement la méthode TDD, tout en visant ≥ 85 % de couverture de code. Le projet a également servi d’exercice pour configurer correctement un environnement de tests PHP moderne.
 
 ⸻
 
-✍️ Auteurs
+2. Approche TDD (RED → GREEN → REFACTOR)
 
-Projet réalisé dans le cadre du module Web3 – HETIC
-Développeur : Raphael PAES RODRIGUES DA SILVA
+2.1. Mise en place
+
+J’ai configuré le projet avec autoload PSR-4, un dossier src/, un dossier tests/, et un fichier phpunit.xml. Cela a permis de travailler avec des namespaces propres (App\Argent / Tests\Argent).
+
+2.2. Phase RED
+
+J’ai commencé en écrivant des tests avant d’écrire la classe :
+	•	solde initial,
+	•	dépôt,
+	•	retrait,
+	•	retrait impossible,
+	•	allocation hebdomadaire.
+
+Tous les tests échouaient (classe inexistante), ce qui est conforme au TDD.
+
+2.3. Phase GREEN
+
+J’ai ensuite créé la classe PorteMonnaie avec les méthodes minimales pour satisfaire les tests.
+Des validations métier ont été ajoutées :
+	•	montants strictement positifs,
+	•	allocation non négative,
+	•	impossibilité de retirer au-delà du solde.
+
+Quand tous les tests sont passés au vert, je suis passé à la phase suivante.
+
+2.4. Phase REFACTOR
+
+J’ai simplifié le code, clarifié certaines exceptions, et nettoyé l’implémentation pour qu’elle reste cohérente tout en gardant tous les tests au vert.
+
+⸻
+
+3. Amélioration de la couverture
+
+Pour dépasser largement 85 %, j’ai ajouté des tests pour :
+	•	dépôt négatif,
+	•	retrait négatif,
+	•	allocation négative,
+	•	application multiple de l’allocation.
+
+Ces tests couvrent toutes les branches conditionnelles de la classe.
+
+Résultat : 100 % de couverture.
+
+⸻
+
+4. Couverture de code : difficultés techniques rencontrées
+
+4.1. Aucun driver de couverture disponible
+
+Lors de la génération du rapport, PHPUnit indiquait :
+
+No code coverage driver available
+
+J’utilisais PHP 8.5, incompatible avec Xdebug via PECL à ce moment-là.
+
+4.2. Solution
+	•	Installation d’une version parallèle : PHP 8.4
+	•	Installation et activation de Xdebug
+	•	Configuration du filtre de couverture dans phpunit.xml :
+
+<source>
+    <include>
+        <directory>src</directory>
+    </include>
+</source>
+
+Après cela, la couverture a fonctionné correctement.
+
+⸻
+
+5. Compétences acquises
+
+Grâce à ce projet, j’ai renforcé :
+	•	ma maîtrise du TDD (vrai cycle RED/GREEN/REFACTOR),
+	•	l’écriture de tests robustes incluant les cas limites,
+	•	la compréhension profonde de l’autoload PSR-4,
+	•	la configuration de PHPUnit et Xdebug,
+	•	l’analyse de rapports de couverture,
+	•	la gestion multi-versions de PHP via Homebrew.
+
+⸻
+
+👤 8. Auteur
+
+Projet réalisé par Raphael Paes Rodrigues da Silva,
+dans le cadre du module Web3 – HETIC.
 
 ⸻

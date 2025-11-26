@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="vendor/autoload.php" colors="true">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    colors="true">
     <testsuites>
         <testsuite name="unit">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <!-- Filtre pour la couverture de code : on ne mesure que src/ -->
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
 </phpunit>
